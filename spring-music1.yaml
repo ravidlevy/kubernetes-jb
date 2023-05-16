@@ -1,0 +1,17 @@
+#### Please taint your Node with applications=frontends:NoSchedule
+apiVersion: v1
+kind: Pod
+metadata:
+  name: spring-music1
+  labels:
+    env: test
+spec:
+  containers:
+  - name: spring-app
+    image: yanivomc/spring-music:latest
+    imagePullPolicy: IfNotPresent
+  tolerations:
+    - key: "applications"
+      operator: "Exists"
+      effect: "NoExecute"
+

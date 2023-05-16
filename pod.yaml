@@ -4,6 +4,8 @@ metadata:
   name: nginx
   namespace: nginx
 spec:
+  nodeSelector:
+    env: prod
   containers:
   - name: nginx
     image: nginx:1.24.0

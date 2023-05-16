@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: nginx
+  namespace: nginx
+  labels:
+    app: nginx
+spec:
+  # here we select the number of pods we wish to start and the selector that tells our replica set which pods it needs 
+  #  to manage
+  replicas: 3
+  selector:  # Using the selector we tell our replicaset which pods to manage
+    matchLabels:
+      app: nginx
+  template:   # here we define our PODS Specs (k8s uses go template in the background)
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.24.0
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: nginx-empty-dir
+          mountPath: /app/data
+      - name: springapp
+        image: yanivomc/spring-music:latest
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: nginx-empty-dir
+          mountPath: /app/data
+      volumes:
+      - name: nginx-empty-dir
+        emptyDir: {}
