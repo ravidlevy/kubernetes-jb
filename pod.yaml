@@ -9,7 +9,16 @@ spec:
     image: nginx:1.24.0
     ports:
     - containerPort: 80
+    volumeMounts:
+    - name: nginx-empty-dir
+      mountPath: /app/data
   - name: springapp
     image: yanivomc/spring-music:latest
     ports:
     - containerPort: 8080
+    volumeMounts:
+    - name: nginx-empty-dir
+      mountPath: /app/data
+  volumes:
+  - name: nginx-empty-dir
+    emptyDir: {}
