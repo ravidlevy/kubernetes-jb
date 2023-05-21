@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ravid-ifconfig
+spec:
+  template:
+    spec:
+      containers:
+      - name: hello-world
+        image: alpine/curl:latest
+        imagePullPolicy: IfNotPresent
+        command:
+        - /bin/sh
+        - -c
+        - curl https://ifconfig.io/
+      restartPolicy: OnFailure
+  backoffLimit: 4
