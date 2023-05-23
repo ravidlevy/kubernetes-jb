@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  {{- include "spring.name" . | nindent 2}}
+spec:
+  selector:
+    matchLabels:
+      {{- include "spring.labels" . | nindent 6}}
+  replicas: {{ default 1 .Values.deployment.replica | int }}
+  template:
+    metadata:
+      labels:
+        {{- include "spring.labels" . | nindent 8}}
+    spec:
+      containers:
+      - name: {{ .Release.Name }}
+        image: "{{ .Values.deployment.image }}:{{ .Values.deployment.tag }}"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: {{ .Values.service.port.target }}
+

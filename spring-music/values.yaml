@@ -1,0 +1,23 @@
+global:
+  env: remote
+
+configmap:
+  database: 
+    dbname: db_mysql-test
+    dbtable: music
+  food:
+    drink: beer
+    eat: Peanut Butter and Jelly sandwich
+
+service:
+  type: LoadBalancer
+  port:
+    name: http
+    source: 80
+    target: 8080
+    protocol: TCP
+
+deployment:
+  image: yanivomc/spring-music
+  tag: latest
+  replica: 2
